@@ -4,18 +4,31 @@ import pickle
 import atexit
 
 class Player:
+    ''' Класс Player имеет поля:
+            _id - неизмняемое поле - id игрока
+            _name - неизменяемое поле - имя жабки
+            last_feed - время последнего кормления
+            size - размер жабки'''
     def __init__(self, id : str, name: str ):
+        '''
+        Конструктор класса принимает 2 аргумента:
+            id - строчное значение id пользователя
+            name - строчное представление имени жабы'''
         self._id = id
         self._name = name
         self.last_feed =datetime.datetime.now() - datetime.timedelta(minutes=20)
         self.size = 1
     def feed(self):
+        '''
+        Функция проверяет прошло ли 20 минут с последнего кормления и
+        прибавлет 1 к размеру(size)'''
         if datetime.datetime.now() - self.last_feed > datetime.timedelta(minutes=20):
             self.size += 1
             self.last_feed  = datetime.datetime.now()
         else:
             raise PlayerException
     def __str__(self):
+        '''Шаблон для вывода экземпляра класса в строчном виде'''
         return f"{self._name}🐸  ==>  {self.size} кг."
 
 class PlayerException(Exception):
